@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.notes.R
 import com.example.notes.databinding.FragmentAddNewNoteBinding
+import com.example.notes.utils.showToast
 
 class FragmentAddNote : Fragment() {
 
@@ -43,7 +44,9 @@ class FragmentAddNote : Fragment() {
             val text = binding.etAddNewNoteText.text.toString()
 
             if (name.isEmpty()){
-                
+                showToast("Title is empty !!!")
+            } else {
+
             }
         }
     }
