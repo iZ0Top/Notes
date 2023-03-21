@@ -1,10 +1,12 @@
 package com.example.notes.screens
 
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.notes.R
 import com.example.notes.databinding.FragmentStartBinding
@@ -15,10 +17,12 @@ class FragmentStart : Fragment() {
 
     private var _binding: FragmentStartBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var fragStartViewModel: FragmentStartViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -33,8 +37,6 @@ class FragmentStart : Fragment() {
         super.onStart()
         init()
 
-
-
     }
 
 
@@ -43,7 +45,16 @@ class FragmentStart : Fragment() {
 
         binding.btnRoom.setOnClickListener {
             fragStartViewModel.initDataBase(TYPE_ROOM){
-                APP_ACTIVITY.mNavController.navigate(R.id.action_fragmentStart_to_fragmentMain)
+                APP_ACTIVITY.navController.navigate(R.id.action_fragmentStart_to_fragmentMain)
+            }
+        }
+        binding.btnFirebase.setOnClickListener {
+            binding.etEmail.visibility = View.VISIBLE
+            binding.etPassword.visibility = View.VISIBLE
+            binding.btnLogin.visibility = View.VISIBLE
+
+            binding.btnLogin.setOnClickListener {
+
             }
         }
     }

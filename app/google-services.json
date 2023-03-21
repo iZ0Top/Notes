@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "982897109758",
+    "firebase_url": "https://notestest-87b1f-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "notestest-87b1f",
+    "storage_bucket": "notestest-87b1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982897109758:android:5c973cb46de8621fc213af",
+        "android_client_info": {
+          "package_name": "com.example.notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982897109758-mafadka7m774t4tslbv5pkllg60ufbon.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIIuz0MfsADGewBdS0StzbdEZFgyI5lyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982897109758-mafadka7m774t4tslbv5pkllg60ufbon.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

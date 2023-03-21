@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.notes.R
 import com.example.notes.databinding.FragmentAddNewNoteBinding
+import com.example.notes.model.AppNote
+import com.example.notes.utils.APP_ACTIVITY
 import com.example.notes.utils.showToast
 
 class FragmentAddNote : Fragment() {
@@ -46,7 +48,11 @@ class FragmentAddNote : Fragment() {
             if (name.isEmpty()){
                 showToast("Title is empty !!!")
             } else {
-
+                showToast("Title added !")
+                fragAddNewViewModel.insertToDatabase(AppNote(name = name, text = text)){
+                     showToast("Note added !")
+                     APP_ACTIVITY.navController.navigate(R.id.action_fragmentAddNewNote_to_fragmentMain)
+                }
             }
         }
     }
