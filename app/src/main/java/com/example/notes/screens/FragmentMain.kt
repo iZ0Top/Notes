@@ -42,7 +42,9 @@ class FragmentMain : Fragment() {
 
     fun init(){
         setHasOptionsMenu(true)
+
         fragMainViewModel = ViewModelProvider(this).get(FragmentMainViewModel::class.java)
+
         myAdapter = Adapter()
         myRecyclerView = binding.recyclerView
         myRecyclerView.adapter = myAdapter
@@ -55,7 +57,7 @@ class FragmentMain : Fragment() {
         fragMainViewModel.allNotes.observe(this, myObserver)
 
         binding.buttonFabAddNote.setOnClickListener {
-            APP_ACTIVITY.navController.navigate(R.id.action_fragmentMain_to_fragmentStart)
+            APP_ACTIVITY.navController.navigate(R.id.action_fragmentMain_to_fragmentAddNewNote)
         }
     }
 
@@ -67,6 +69,7 @@ class FragmentMain : Fragment() {
         when(item.itemId){
             R.id.btn_exit_program -> {
                 fragMainViewModel.signOut()
+                APP_ACTIVITY.navController.navigate(R.id.action_fragmentMain_to_fragmentStart)
             }
         }
 
