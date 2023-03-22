@@ -1,11 +1,9 @@
 package com.example.notes.screens
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notes.R
 import com.example.notes.databinding.ItemNoteBinding
 import com.example.notes.model.AppNote
 
@@ -45,7 +43,7 @@ class Adapter: RecyclerView.Adapter<Adapter.MyHolder>() {
     override fun onViewAttachedToWindow(holder: MyHolder) {
         super.onViewAttachedToWindow(holder)
         holder.itemView.setOnClickListener {
-            FragmentMain.clic(listNotes[holder.adapterPosition])
+            FragmentMain.click(listNotes[holder.adapterPosition])
         }
     }
 

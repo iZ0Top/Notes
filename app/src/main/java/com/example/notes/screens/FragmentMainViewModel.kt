@@ -8,4 +8,8 @@ class FragmentMainViewModel(application: Application): AndroidViewModel(applicat
 
     val allNotes = REPOSITORY.allNotes
 
+    fun signOut(){
+        REPOSITORY.signOut()
+    }
+
 }

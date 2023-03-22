@@ -1,10 +1,9 @@
 package com.example.notes.screens
 
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +11,7 @@ import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
 import com.example.notes.model.AppNote
 import com.example.notes.utils.APP_ACTIVITY
+import com.example.notes.utils.TAG
 
 class FragmentMain : Fragment() {
 
@@ -38,13 +38,11 @@ class FragmentMain : Fragment() {
     override fun onStart() {
         super.onStart()
         init()
-
-
     }
 
     fun init(){
+        setHasOptionsMenu(true)
         fragMainViewModel = ViewModelProvider(this).get(FragmentMainViewModel::class.java)
-
         myAdapter = Adapter()
         myRecyclerView = binding.recyclerView
         myRecyclerView.adapter = myAdapter
@@ -56,10 +54,23 @@ class FragmentMain : Fragment() {
 
         fragMainViewModel.allNotes.observe(this, myObserver)
 
-
         binding.buttonFabAddNote.setOnClickListener {
-            APP_ACTIVITY.navController.navigate(R.id.action_fragmentMain_to_fragmentAddNewNote)
+            APP_ACTIVITY.navController.navigate(R.id.action_fragmentMain_to_fragmentStart)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu_toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.btn_exit_program -> {
+                fragMainViewModel.signOut()
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
 
@@ -72,8 +83,7 @@ class FragmentMain : Fragment() {
 
 
     companion object {
-        fun clic(note: AppNote){
-
+        fun click(note: AppNote){
             val bundle = Bundle()
             bundle.putSerializable("note", note)
             APP_ACTIVITY.navController.navigate(R.id.action_fragmentMain_to_fragmentNote2, bundle)

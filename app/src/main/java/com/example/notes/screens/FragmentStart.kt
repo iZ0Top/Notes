@@ -1,17 +1,15 @@
 package com.example.notes.screens
 
-import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.example.notes.R
 import com.example.notes.databinding.FragmentStartBinding
-import com.example.notes.utils.APP_ACTIVITY
-import com.example.notes.utils.TYPE_ROOM
+import com.example.notes.utils.*
 
 class FragmentStart : Fragment() {
 
@@ -19,6 +17,8 @@ class FragmentStart : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var fragStartViewModel: FragmentStartViewModel
+
+    private var statusVisibility: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,16 +48,39 @@ class FragmentStart : Fragment() {
                 APP_ACTIVITY.navController.navigate(R.id.action_fragmentStart_to_fragmentMain)
             }
         }
+
+
         binding.btnFirebase.setOnClickListener {
-            binding.etEmail.visibility = View.VISIBLE
-            binding.etPassword.visibility = View.VISIBLE
-            binding.btnLogin.visibility = View.VISIBLE
+
+            if (!statusVisibility) changeVisibilityLogin(View.VISIBLE)
+            else changeVisibilityLogin(View.INVISIBLE)
 
             binding.btnLogin.setOnClickListener {
+                val inputEmail = binding.etEmail.text.toString()
+                val inputPassword = binding.etPassword.text.toString()
+                if (inputEmail.isNotEmpty() && inputPassword.isNotEmpty()){
+                    EMAIL = inputEmail
+                    PASSWORD = inputPassword
+                    fragStartViewModel.initDataBase(TYPE_FIREBASE){
+                        showToast("Init OK")
+                        APP_ACTIVITY.navController.navigate(R.id.action_fragmentStart_to_fragmentMain)
+                    }
 
+                } else {
+                    showToast("Enter email and password")
+                }
             }
         }
     }
+
+    private fun changeVisibilityLogin(status: Int){
+
+        statusVisibility = (status == View.VISIBLE)
+        binding.etEmail.visibility = status
+        binding.etPassword.visibility = status
+        binding.btnLogin.visibility = status
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
