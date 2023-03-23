@@ -8,7 +8,6 @@ import com.google.firebase.database.DatabaseReference
 lateinit var APP_ACTIVITY: MainActivity
 lateinit var REPOSITORY: DatabaseRepository
 
-const val TYPE_DATABASE = "type_database"
 const val TYPE_ROOM = "type_room"
 const val TYPE_FIREBASE = "type_firebase"
 const val ID_FIREBASE = "id_firebase"
@@ -21,5 +20,7 @@ lateinit var PASSWORD: String
 lateinit var AUTH_FIREBASE: FirebaseAuth
 lateinit var CURRENT_ID: String
 lateinit var REF_DB_FIREBASE: DatabaseReference
+
+lateinit var TYPE_CURRENT_DATABASE: String
 
 const val TAG = "log"

@@ -25,7 +25,6 @@ class FragmentStartViewModel(application: Application) : AndroidViewModel(applic
             TYPE_FIREBASE -> {
                 REPOSITORY = FirebaseRepository()
                 REPOSITORY.connectToDatabase({onSuccess()}, { showToast(it) })
-
             }
         }
     }

@@ -9,6 +9,8 @@ import com.example.notes.R
 import com.example.notes.databinding.FragmentNoteBinding
 import com.example.notes.model.AppNote
 import com.example.notes.utils.APP_ACTIVITY
+import com.example.notes.utils.TYPE_CURRENT_DATABASE
+import com.example.notes.utils.TYPE_FIREBASE
 import com.example.notes.utils.showToast
 
 class FragmentNote : Fragment() {
@@ -36,16 +38,13 @@ class FragmentNote : Fragment() {
     override fun onStart() {
         super.onStart()
         fragNoteViewModel = ViewModelProvider(this).get(FragmentNoteViewModel::class.java)
-
         setHasOptionsMenu(true)
         binding.noteName.text = currentNote.name
-        binding.noteName.text = currentNote.text
-
+        binding.noteText.text = currentNote.text
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.note_menu_toolbar, menu)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -56,18 +55,18 @@ class FragmentNote : Fragment() {
                     showToast("Notes deleted successful!")
                 }
             }
+            R.id.btn_edit_note -> {
+                val bundle = Bundle()
+                bundle.putSerializable("note_to_edit", currentNote)
+                APP_ACTIVITY.navController.navigate(R.id.action_fragmentNote_to_fragmentAddNewNote, bundle)
+            }
         }
-
         return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
         super.onResume()
     }
-
-
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

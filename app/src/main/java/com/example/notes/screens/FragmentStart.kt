@@ -1,12 +1,10 @@
 package com.example.notes.screens
 
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.example.notes.R
 import com.example.notes.databinding.FragmentStartBinding
 import com.example.notes.utils.*
@@ -35,23 +33,36 @@ class FragmentStart : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        init()
 
+        setHasOptionsMenu(true)
+
+        fragStartViewModel = ViewModelProvider(this).get(FragmentStartViewModel::class.java)
+
+        Log.d(TAG, "Preferences: initUsers=${Preferences.getInitUser()}, typeDatabase=${Preferences.getTypeDatabase()}")
+
+        if (Preferences.getInitUser()){
+            Log.d(TAG, "Database initialisation start")
+            fragStartViewModel.initDataBase(Preferences.getTypeDatabase()) {
+                Log.d(TAG, "Database initialisation, callback - navigate")
+                APP_ACTIVITY.navController.navigate(R.id.action_fragmentStart_to_fragmentMain)
+            }
+        } else {
+            init()
+        }
     }
 
-
     private fun init(){
-        fragStartViewModel = ViewModelProvider(this).get(FragmentStartViewModel::class.java)
 
         binding.btnRoom.setOnClickListener {
             fragStartViewModel.initDataBase(TYPE_ROOM){
+                Preferences.setInitUser(true)
+                Preferences.setTypeDatabase(TYPE_ROOM)
+                TYPE_CURRENT_DATABASE = TYPE_ROOM
                 APP_ACTIVITY.navController.navigate(R.id.action_fragmentStart_to_fragmentMain)
             }
         }
 
-
         binding.btnFirebase.setOnClickListener {
-
             if (!statusVisibility) changeVisibilityLogin(View.VISIBLE)
             else changeVisibilityLogin(View.INVISIBLE)
 
@@ -62,16 +73,31 @@ class FragmentStart : Fragment() {
                     EMAIL = inputEmail
                     PASSWORD = inputPassword
                     fragStartViewModel.initDataBase(TYPE_FIREBASE){
-                        showToast("Init OK")
+                        Preferences.setInitUser(true)
+                        Preferences.setTypeDatabase(TYPE_FIREBASE)
+                        TYPE_CURRENT_DATABASE = TYPE_FIREBASE
                         APP_ACTIVITY.navController.navigate(R.id.action_fragmentStart_to_fragmentMain)
                     }
-
                 } else {
                     showToast("Enter email and password")
                 }
             }
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu_toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.btn_exit_program -> {
+                APP_ACTIVITY.navController.navigateUp()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
     private fun changeVisibilityLogin(status: Int){
 

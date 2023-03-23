@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "notes_table")
 data class AppNote(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     val id_firebase: String = "none",
-    @ColumnInfo(name = "name") val name: String = "",
-    @ColumnInfo(name = "text") val text: String = ""
+    @ColumnInfo(name = "name") var name: String = "",
+    @ColumnInfo(name = "text") var text: String = ""
 ): java.io.Serializable

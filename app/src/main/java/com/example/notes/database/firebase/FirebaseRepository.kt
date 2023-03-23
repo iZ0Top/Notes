@@ -38,13 +38,27 @@ class FirebaseRepository(): DatabaseRepository {
     }
 
     override fun connectToDatabase(onSuccess: () -> Unit, onFail: (String) -> Unit) {
-        AUTH_FIREBASE.signInWithEmailAndPassword(EMAIL, PASSWORD)
-            .addOnSuccessListener { onSuccess() }
-            .addOnFailureListener {
-                AUTH_FIREBASE.createUserWithEmailAndPassword(EMAIL, PASSWORD)
-                .addOnSuccessListener { onSuccess() }
-                .addOnFailureListener { onFail(it.message.toString()) }
-            }
+
+        if (Preferences.getInitUser()){
+            initReference()
+            onSuccess()
+        }
+        else {
+            AUTH_FIREBASE.signInWithEmailAndPassword(EMAIL, PASSWORD)
+                .addOnSuccessListener {
+                    initReference()
+                    onSuccess() }
+                .addOnFailureListener {
+                    AUTH_FIREBASE.createUserWithEmailAndPassword(EMAIL, PASSWORD)
+                        .addOnSuccessListener {
+                            initReference()
+                            onSuccess() }
+                        .addOnFailureListener { onFail(it.message.toString()) }
+                }
+        }
+    }
+
+    fun initReference(){
         CURRENT_ID = AUTH_FIREBASE.currentUser?.uid.toString()
         REF_DB_FIREBASE = FirebaseDatabase.getInstance().reference.child(CURRENT_ID)
     }

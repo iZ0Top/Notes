@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.notes.databinding.ActivityMainBinding
 import com.example.notes.utils.APP_ACTIVITY
+import com.example.notes.utils.Preferences
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(mToolbar)
         title = "Notes"
 
+        Preferences.getPreferences(this)
     }
 
 

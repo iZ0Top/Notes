@@ -10,7 +10,7 @@ interface RoomDao {
     @Query("SELECT * FROM notes_table")
     fun getAllNotes(): LiveData<List<AppNote>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: AppNote)
 
     @Delete

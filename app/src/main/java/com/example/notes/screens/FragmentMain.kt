@@ -1,7 +1,6 @@
 package com.example.notes.screens
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -11,7 +10,7 @@ import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
 import com.example.notes.model.AppNote
 import com.example.notes.utils.APP_ACTIVITY
-import com.example.notes.utils.TAG
+import com.example.notes.utils.Preferences
 
 class FragmentMain : Fragment() {
 
@@ -67,12 +66,12 @@ class FragmentMain : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.btn_exit_program -> {
+            R.id.btn_exit_to_start -> {
                 fragMainViewModel.signOut()
+                Preferences.setInitUser(false)
                 APP_ACTIVITY.navController.navigate(R.id.action_fragmentMain_to_fragmentStart)
             }
         }
-
         return super.onOptionsItemSelected(item)
     }
 

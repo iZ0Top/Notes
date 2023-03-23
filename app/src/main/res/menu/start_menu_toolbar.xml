@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/btn_exit_to_start"
+        android:id="@+id/btn_exit_program"
         android:title="Close program"
-        android:icon="@drawable/ic_back"
+        android:icon="@drawable/ic_close"
         app:showAsAction="ifRoom"
-/>
+        />
 
 </menu>
